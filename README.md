@@ -9,13 +9,23 @@ Package license: AGPL-3.0-only
 
 Summary: The Ultimate Python Dependency Resolver. One environment. Infinite packages. Zero conflicts.
 
-Development: https://github.com/1minds3t/omnipkg
+Development: https://github.com/1minds3t
 
-Documentation: https://github.com/1minds3t/omnipkg
+Documentation: https://github.com/1minds3t/omnipkg/tree/main/docs
 
-omnipkg simplifies Python dependency management by enabling mid-script version switching and conflict isolation.
-Requires a running Redis server (v5.0+), which must be installed and started separately by the user.
-Tested on Windows, macOS, Linux, and Raspberry Pi.
+Omnipkg is a next-generation Python dependency manager that solves the
+classic problems of pip, conda, and Docker by enabling multiple package
+versions and Python interpreters to coexist in a single environment.
+Key features:
+  • Dynamic version switching: swap between NumPy, TensorFlow, or any package mid-script.
+  • Multi-interpreter freedom: run Python 3.8, 3.11, and beyond in one process.
+  • Auto-healing: automatically detect and fix broken dependencies at runtime.
+  • Bubble isolation: install conflicting versions side by side without virtualenvs.
+  • SQLite/Redis intelligence: instant lookups, conflict resolution, and rollback.
+Omnipkg is designed for researchers, quants, and engineers who demand
+speed, reproducibility, and zero-friction workflows across complex
+dependency stacks. It provides a robust alternative to pipx, uv, poetry,
+and Docker, all in one tool. Optional: omnipkg can use Redis (v5.0+) for improved speed.
 
 
 Current build status
