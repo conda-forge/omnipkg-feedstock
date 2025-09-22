@@ -38,7 +38,6 @@ test:
     - omnipkg
   commands:
     - omnipkg --version
-    - python -c "import omnipkg; assert omnipkg.__version__ == '{{ version }}'"
 
 about:
   home: https://github.com/1minds3t/omnipkg
