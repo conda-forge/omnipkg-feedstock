@@ -1,6 +1,6 @@
 {% set name = "omnipkg" %}
 {% set version = "1.5.0" %}
-{% set python_min = "3.8" %}
+{% set python_min = "3.9" %}
 
 package:
   name: {{ name|lower }}
