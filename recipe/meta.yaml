@@ -1,69 +1,47 @@
-{% set name = "omnipkg" %}
-{% set version = "1.5.0" %}
-
 package:
-  name: {{ name|lower }}
-  version: {{ version }}
+  name: omnipkg
+  version: 1.5.0
 
 source:
-  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  url: https://pypi.org/packages/source/o/omnipkg/omnipkg-1.5.0.tar.gz
   sha256: cab86e7ceb3a7d9acc308598361c983e5a97247dddc914e933ec4df146c80d4c
 
 build:
   number: 0
   noarch: python
-  script: "python -m pip install . --no-deps --no-build-isolation -vv"
+  script: {{ PYTHON }} -m pip install . --no-deps --no-build-isolation -vv
   entry_points:
     - omnipkg = omnipkg.cli:main
     - 8pkg = omnipkg.cli:main
 
 requirements:
   host:
-    - python {{ python_min }}
+    - python >=3.8
     - pip
-    - setuptools >=61.0
   run:
-    - python >={{ python_min }}
-    - packaging >=23.0
-    - requests >=2.20
-    - filelock >=3.9
-    - tomli
-    - tqdm
-    - safety >=3.0
-    - aiohttp
-    - uv
+    - python >=3.8
+    - redis >=4.5.0
+    - uv >=0.1.0
+    - requests >=2.28.0
+    - rich >=13.0.0
+    - click >=8.1.0
+    - pyyaml >=6.0.0
+    - packaging >=21.0
 
 test:
-  imports:
-    - omnipkg
   commands:
-    - omnipkg --version
+    - omnipkg --help
+    - 8pkg --help
+    - python -c "import omnipkg; print('Import successful')"
 
 about:
   home: https://github.com/1minds3t/omnipkg
   license: AGPL-3.0-only
-  license_family: AGPL
   license_file: LICENSE
-  summary: 'The Ultimate Python Dependency Resolver. One environment. Infinite packages. Zero conflicts.'
+  summary: 'The Ultimate Python Dependency Resolver - One environment, infinite versions, zero conflicts'
   description: |
-  Omnipkg is a next-generation Python dependency manager that solves the
-  classic problems of pip, conda, and Docker by enabling multiple package
-  versions and Python interpreters to coexist in a single environment.
-
-  Key features:
-    • Dynamic version switching: swap between NumPy, TensorFlow, or any package mid-script.  
-    • Multi-interpreter freedom: run Python 3.8, 3.11, and beyond in one process.  
-    • Auto-healing: automatically detect and fix broken dependencies at runtime.  
-    • Bubble isolation: install conflicting versions side by side without virtualenvs.  
-    • SQLite/Redis intelligence: instant lookups, conflict resolution, and rollback.  
-
-  Omnipkg is designed for researchers, quants, and engineers who demand
-  speed, reproducibility, and zero-friction workflows across complex
-  dependency stacks. It provides a robust alternative to pipx, uv, poetry,
-  and Docker, all in one tool. Optional: omnipkg can use Redis (v5.0+) for improved speed.
-  doc_url: https://github.com/1minds3t/omnipkg/tree/main/docs
-  dev_url: https://github.com/1minds3t
-
-extra:
-  recipe-maintainers:
-    - 1minds3t
+    omnipkg is an intelligent, self-healing runtime orchestrator that breaks 
+    the fundamental laws of Python environments. Run multiple Python versions 
+    and package versions concurrently in the same environment without conflicts.
+  doc_url: https://github.com/1minds3t/omnipkg
+  dev_url: https://github.com/1minds3t/omnipkg
