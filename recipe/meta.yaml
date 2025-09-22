@@ -1,6 +1,5 @@
 {% set name = "omnipkg" %}
 {% set version = "1.5.0" %}
-{% set python_min = "3.9" %}
 
 package:
   name: {{ name|lower }}
@@ -20,7 +19,7 @@ build:
 
 requirements:
   host:
-    - python >={{ python_min }}
+    - python {{ python_min }}
     - pip
     - setuptools >=61.0
   run:
