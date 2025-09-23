@@ -1,14 +1,11 @@
 {% set name = "omnipkg" %}
-{% set version = "1.5.0" %}
-
+{% set version = "1.5.1" %}
 package:
   name: {{ name|lower }}
   version: {{ version }}
-
 source:
   url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-  sha256: cab86e7ceb3a7d9acc308598361c983e5a97247dddc914e933ec4df146c80d4c
-
+  sha256: 3e3f813292a906dc4fd824de364570c8fecae96a01b324304052cb00f30488c3
 build:
   number: 0
   noarch: python
@@ -16,7 +13,6 @@ build:
   entry_points:
     - omnipkg = omnipkg.cli:main
     - 8pkg = omnipkg.cli:main
-
 requirements:
   host:
     - python >=3.9,<3.14
@@ -26,18 +22,17 @@ requirements:
     - python >=3.9,<3.14
     - packaging >=21.0
     - requests >=2.20
+    - authlib >=1.6.4
     - filelock >=3.9
     - tomli  # python_version<"3.11"
     - safety >=2.3.5
     - aiohttp
     - uv
-
 test:
   imports:
     - omnipkg
   commands:
     - omnipkg --version
-
 about:
   home: https://github.com/1minds3t/omnipkg
   license: AGPL-3.0-only
@@ -45,22 +40,31 @@ about:
   license_file: LICENSE
   summary: 'The Ultimate Python Dependency Resolver. One environment. Infinite packages. Zero conflicts.'
   description: |
-    Omnipkg is a next-generation Python dependency manager that solves the
-    classic problems of pip, conda, and Docker by enabling multiple package
-    versions and Python interpreters to coexist in a single environment.
-    Key features:
-      • Dynamic version switching: swap between NumPy, TensorFlow, or any package mid-script.  
-      • Multi-interpreter freedom: run Python 3.8, 3.11, and beyond in one process.  
-      • Auto-healing: automatically detect and fix broken dependencies at runtime.  
-      • Bubble isolation: install conflicting versions side by side without virtualenvs.  
-      • SQLite/Redis intelligence: instant lookups, conflict resolution, and rollback.  
-    Omnipkg is designed for researchers, quants, and engineers who demand
-    speed, reproducibility, and zero-friction workflows across complex
-    dependency stacks. It provides a robust alternative to pipx, uv, poetry,
-    and Docker, all in one tool. Optional: omnipkg can use Redis (v5.0+) for improved speed.
+    Omnipkg is a next-generation Python manager engineered for speed, solving
+    dependency hell by allowing multiple package and Python versions to coexist
+    and swap instantly in a single environment.
+
+    This version introduces major performance upgrades and powerful new environment
+    repair tools for demanding, high-throughput workflows.
+
+    Key Features:
+      • **NEW `doctor`/`heal` Commands:** Surgically repair corrupted environments and
+        automatically reconcile complex dependency conflicts.
+      
+      • **High-Speed Concurrency:** A rewritten core enables massively parallel
+        operations, perfect for complex CI/CD and multi-threaded applications.
+
+      • **Microsecond Auto-Healing:** On-the-fly version conflict resolution that is
+        orders of magnitude faster than traditional package managers.
+
+      • **Instant Version Swapping:** Dynamically switch between conflicting packages
+        or entire Python interpreters mid-script, without virtualenvs.
+        
+    Omnipkg is the high-performance alternative to managing countless virtualenvs
+    and Docker images, built for developers and data scientists who demand
+    maximum flexibility and speed.
   doc_url: https://github.com/1minds3t/omnipkg/tree/main/docs
   dev_url: https://github.com/1minds3t
-
 extra:
   recipe-maintainers:
     - 1minds3t
