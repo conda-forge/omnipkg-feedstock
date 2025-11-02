@@ -1,11 +1,11 @@
 {% set name = "omnipkg" %}
-{% set version = "1.5.11" %}
+{% set version = "1.5.12" %}
 package:
   name: {{ name|lower }}
   version: {{ version }}
 source:
   url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-  sha256: 1f0dcbd41fec17e7716190aefc5f823d0a3be4c145307bd9db7aab2ad98629e6
+  sha256: 3da338592f785fc47cf3eba49d2015195ac539bdbf8a59a7d7728da39e7ea7ca
   
 build:
   number: 0
@@ -16,19 +16,24 @@ build:
     - 8pkg = omnipkg.cli:main
 requirements:
   host:
-    - python >=3.9,<3.14
+    - python >=3.7,<3.15
     - pip
     - setuptools >=61.0
   run:
-    - python >=3.9,<3.14
-    - packaging >=21.0
+    - python >=3.7,<3.15
+    # Conditional logic for packaging based on Python version
+    - packaging >=23.0  # [py>=310]
+    - packaging >=21.0,<22.0  # [py<310]
     - requests >=2.20
-    - authlib >=1.6.4
+    - authlib >=1.6.5
     - filelock >=3.9
-    - tomli  # python_version<"3.11"
-    - safety >=2.3.5
-    - aiohttp
-    - uv
+    - tomli  # [py<311]
+    # Conditional logic for safety
+    - safety >=3.0  # [py>=310 and py<314]
+    - aiohttp >=3.13.1
+    # Conditional logic for pip-audit
+    - pip-audit >=2.6.0  # [py>=314]
+    - uv >=0.9.5
 test:
   imports:
     - omnipkg
@@ -41,29 +46,39 @@ about:
   license_file: LICENSE
   summary: 'The Ultimate Python Dependency Resolver. One environment. Infinite packages. Zero conflicts.'
   description: |
-    Omnipkg is a next-generation Python manager engineered for speed, solving
-    dependency hell by allowing multiple package and Python versions to coexist
-    and swap instantly in a single environment.
+    omnipkg is not just a package manager; it's an intelligent, self-healing runtime
+    orchestrator that breaks the fundamental laws of Python environments. It allows
+    multiple versions of any package—and even multiple Python interpreters—to
+    coexist and hot-swap in a single environment.
 
-    This version introduces major performance upgrades and powerful new environment
-    repair tools for demanding, high-throughput workflows.
+    This version introduces "Quantum Healing," an AI-driven feature that makes
+    the tool self-aware of Python version incompatibilities.
 
     Key Features:
-      • **NEW `doctor`/`heal` Commands:** Surgically repair corrupted environments and
-        automatically reconcile complex dependency conflicts.
+      • **NEW - Quantum Healing:** Automatically detects if a package is incompatible
+        with your current Python version. It will then find a compatible Python
+        version, adopt it, switch the environment context, and complete the
+        installation—all in a single, seamless command.
       
-      • **High-Speed Concurrency:** A rewritten core enables massively parallel
-        operations, perfect for complex CI/CD and multi-threaded applications.
+      • **Cross-Interpreter Adoption & Management:** `omnipkg` can discover, adopt,
+        and manage multiple Python interpreters (e.g., 3.9, 3.10, 3.11+) within one
+        unified environment, enabling true cross-version testing and development.
 
-      • **Microsecond Auto-Healing:** On-the-fly version conflict resolution that is
-        orders of magnitude faster than traditional package managers.
+      • **Live Hot-Swapping:** Dynamically switch between conflicting C-extensions
+        (like NumPy/SciPy) or entire Python interpreters mid-script, without
+        restarting or using virtualenvs.
 
-      • **Instant Version Swapping:** Dynamically switch between conflicting packages
-        or entire Python interpreters mid-script, without virtualenvs.
-        
-    Omnipkg is the high-performance alternative to managing countless virtualenvs
-    and Docker images, built for developers and data scientists who demand
-    maximum flexibility and speed.
+      • **Auto-Healing & Environment Repair:** Proactively finds and removes corrupted
+        installations left by other tools. The `omnipkg run` command detects and
+        fixes `ModuleNotFoundError` and version conflicts on the fly.
+
+      • **Concurrent Operations:** A high-performance core allows `omnipkg` to run
+        operations across multiple Python versions concurrently, drastically
+        accelerating CI/CD pipelines and complex test suites.
+
+    omnipkg eliminates the need for managing countless virtualenvs or Docker images,
+    providing a single, unified, and intelligent environment for developers and
+    data scientists who demand maximum flexibility and speed.
   doc_url: https://github.com/1minds3t/omnipkg/tree/main/docs
   dev_url: https://github.com/1minds3t
 extra:
