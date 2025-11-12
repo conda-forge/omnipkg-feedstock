@@ -1,11 +1,11 @@
 {% set name = "omnipkg" %}
-{% set version = "1.6.0" %}
+{% set version = "1.6.1" %}
 package:
   name: {{ name|lower }}
   version: {{ version }}
 source:
   url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-  sha256: 162519d93ca1db2a89215675f01ac1254ee39680c3e640de02a72055efdb8cb9
+  sha256: e1d31a6729089ceebe5630ba878c979567bc2e64bab1cec88aae39e76d179959
   
 build:
   number: 0
