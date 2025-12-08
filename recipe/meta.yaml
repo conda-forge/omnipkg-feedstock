@@ -1,5 +1,5 @@
 {% set name = "omnipkg" %}
-{% set version = "1.6.2" %}
+{% set version = "2.0.0" %}
 package:
   name: {{ name|lower }}
   version: {{ version }}
@@ -44,41 +44,36 @@ about:
   license: AGPL-3.0-only
   license_family: AGPL
   license_file: LICENSE
-  summary: 'The Ultimate Python Dependency Resolver. One environment. Infinite packages. Zero conflicts.'
+  summary: 'A distributed runtime hypervisor for Python enabling concurrent, zero-copy multi-framework orchestration.'
   description: |
-    omnipkg is not just a package manager; it's an intelligent, self-healing runtime
-    orchestrator that breaks the fundamental laws of Python environments. It allows
-    multiple versions of any package—and even multiple Python interpreters—to
-    coexist and hot-swap in a single environment.
+  OmniPkg 2.0.0 represents a paradigm shift from package management to a Distributed
+    Runtime Architecture. It functions as a local Hypervisor for Python, allowing
+    conflicting AI frameworks and hardware drivers to run concurrently in the same
+    workflow with near-zero latency.
 
-    This version introduces "Quantum Healing," an AI-driven feature that makes
-    the tool self-aware of Python version incompatibilities.
+    This release introduces three critical architectural advancements for ML/AI pipelines:
 
-    Key Features:
-      • **NEW - Quantum Healing:** Automatically detects if a package is incompatible
-        with your current Python version. It will then find a compatible Python
-        version, adopt it, switch the environment context, and complete the
-        installation—all in a single, seamless command.
-      
-      • **Cross-Interpreter Adoption & Management:** `omnipkg` can discover, adopt,
-        and manage multiple Python interpreters (e.g., 3.9, 3.10, 3.11+) within one
-        unified environment, enabling true cross-version testing and development.
+    1. Universal GPU Inter-Process Communication (IPC):
+       Implements a custom, framework-agnostic CUDA IPC protocol using raw ctypes.
+       This enables true zero-copy tensor handoffs between isolated processes (e.g.,
+       passing data from PyTorch to TensorFlow) with ~1.5ms latency, significantly
+       outperforming standard serialization methods.
 
-      • **Live Hot-Swapping:** Dynamically switch between conflicting C-extensions
-        (like NumPy/SciPy) or entire Python interpreters mid-script, without
-        restarting or using virtualenvs.
+    2. Selective Hardware Virtualization:
+       Features dynamic LD_LIBRARY_PATH injection at the worker level. This allows
+       different worker processes to utilize different CUDA Toolkit versions or
+       runtime libraries (e.g., running legacy models on CUDA 11 alongside modern
+       models on CUDA 12) simultaneously on the same host machine without conflict.
 
-      • **Auto-Healing & Environment Repair:** Proactively finds and removes corrupted
-        installations left by other tools. The `omnipkg run` command detects and
-        fixes `ModuleNotFoundError` and version conflicts on the fly.
+    3. Elastic Persistent Daemon Architecture:
+       Replaces ad-hoc process spawning with a self-healing, elastic worker pool.
+       Workers utilize a "clean slate" architecture, morphing into specific framework
+       environments on-demand and purging themselves after execution. This reduces
+       environment context switching latency from ~2000ms (cold start) to ~60ms (warm).
 
-      • **Concurrent Operations:** A high-performance core allows `omnipkg` to run
-        operations across multiple Python versions concurrently, drastically
-        accelerating CI/CD pipelines and complex test suites.
-
-    omnipkg eliminates the need for managing countless virtualenvs or Docker images,
-    providing a single, unified, and intelligent environment for developers and
-    data scientists who demand maximum flexibility and speed.
+    OmniPkg 2.0 eliminates the need for complex container orchestration for local
+    multi-model inference, providing a unified, high-performance runtime for
+    complex scientific and financial modeling workflows.
   doc_url: https://github.com/1minds3t/omnipkg/tree/main/docs
   dev_url: https://github.com/1minds3t
 extra:
