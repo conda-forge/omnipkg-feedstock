@@ -1,12 +1,14 @@
 {% set name = "omnipkg" %}
 {% set version = "2.0.0" %}
+
 package:
   name: {{ name|lower }}
   version: {{ version }}
+
 source:
   url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-  sha256: a87e55ba5a0119a9c56a3add004b8f45ddfa9c678ec4c69b32a4f387807f14d0
-  
+  sha256: 7bab2d312650b774c1f0e82d8897f239edff871fd7705289b891afbc8f09ddb8
+
 build:
   number: 0
   noarch: python
@@ -14,6 +16,7 @@ build:
   entry_points:
     - omnipkg = omnipkg.cli:main
     - 8pkg = omnipkg.cli:main
+
 requirements:
   host:
     - python >=3.7,<3.15
@@ -21,24 +24,24 @@ requirements:
     - setuptools >=61.0
   run:
     - python >=3.7,<3.15
-    # Conditional logic for packaging based on Python version
     - packaging >=23.0  # [py>=310]
     - packaging >=21.0,<22.0  # [py<310]
     - requests >=2.20
     - authlib >=1.6.5
     - filelock >=3.9
+    - psutil >=5.9.0
     - tomli  # [py<311]
-    # Conditional logic for safety
     - safety >=3.0  # [py>=310 and py<314]
     - aiohttp >=3.13.1
-    # Conditional logic for pip-audit
     - pip-audit >=2.6.0  # [py>=314]
     - uv >=0.9.5
+
 test:
   imports:
     - omnipkg
   commands:
     - omnipkg --version
+
 about:
   home: https://github.com/1minds3t/omnipkg
   license: AGPL-3.0-only
@@ -46,7 +49,7 @@ about:
   license_file: LICENSE
   summary: 'A distributed runtime hypervisor for Python enabling concurrent, zero-copy multi-framework orchestration.'
   description: |
-  OmniPkg 2.0.0 represents a paradigm shift from package management to a Distributed
+    OmniPkg 2.0.0 represents a paradigm shift from package management to a Distributed
     Runtime Architecture. It functions as a local Hypervisor for Python, allowing
     conflicting AI frameworks and hardware drivers to run concurrently in the same
     workflow with near-zero latency.
@@ -74,8 +77,10 @@ about:
     OmniPkg 2.0 eliminates the need for complex container orchestration for local
     multi-model inference, providing a unified, high-performance runtime for
     complex scientific and financial modeling workflows.
+
   doc_url: https://github.com/1minds3t/omnipkg/tree/main/docs
   dev_url: https://github.com/1minds3t
+
 extra:
   recipe-maintainers:
     - 1minds3t
