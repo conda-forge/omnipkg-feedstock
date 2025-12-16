@@ -7,25 +7,40 @@ Home: https://github.com/1minds3t/omnipkg
 
 Package license: AGPL-3.0-only
 
-Summary: The Ultimate Python Dependency Resolver. One environment. Infinite packages. Zero conflicts.
+Summary: A distributed runtime hypervisor for Python enabling concurrent, zero-copy multi-framework orchestration.
 
 Development: https://github.com/1minds3t
 
 Documentation: https://github.com/1minds3t/omnipkg/tree/main/docs
 
-Omnipkg is a next-generation Python dependency manager that solves the
-classic problems of pip, conda, and Docker by enabling multiple package
-versions and Python interpreters to coexist in a single environment.
-Key features:
-  • Dynamic version switching: swap between NumPy, TensorFlow, or any package mid-script.
-  • Multi-interpreter freedom: run Python 3.8, 3.11, and beyond in one process.
-  • Auto-healing: automatically detect and fix broken dependencies at runtime.
-  • Bubble isolation: install conflicting versions side by side without virtualenvs.
-  • SQLite/Redis intelligence: instant lookups, conflict resolution, and rollback.
-Omnipkg is designed for researchers, quants, and engineers who demand
-speed, reproducibility, and zero-friction workflows across complex
-dependency stacks. It provides a robust alternative to pipx, uv, poetry,
-and Docker, all in one tool. Optional: omnipkg can use Redis (v5.0+) for improved speed.
+OmniPkg 2.0.0 represents a paradigm shift from package management to a Distributed
+Runtime Architecture. It functions as a local Hypervisor for Python, allowing
+conflicting AI frameworks and hardware drivers to run concurrently in the same
+workflow with near-zero latency.
+
+This release introduces three critical architectural advancements for ML/AI pipelines:
+
+1. Universal GPU Inter-Process Communication (IPC):
+   Implements a custom, framework-agnostic CUDA IPC protocol using raw ctypes.
+   This enables true zero-copy tensor handoffs between isolated processes (e.g.,
+   passing data from PyTorch to TensorFlow) with ~1.5ms latency, significantly
+   outperforming standard serialization methods.
+
+2. Selective Hardware Virtualization:
+   Features dynamic LD_LIBRARY_PATH injection at the worker level. This allows
+   different worker processes to utilize different CUDA Toolkit versions or
+   runtime libraries (e.g., running legacy models on CUDA 11 alongside modern
+   models on CUDA 12) simultaneously on the same host machine without conflict.
+
+3. Elastic Persistent Daemon Architecture:
+   Replaces ad-hoc process spawning with a self-healing, elastic worker pool.
+   Workers utilize a "clean slate" architecture, morphing into specific framework
+   environments on-demand and purging themselves after execution. This reduces
+   environment context switching latency from ~2000ms (cold start) to ~60ms (warm).
+
+OmniPkg 2.0 eliminates the need for complex container orchestration for local
+multi-model inference, providing a unified, high-performance runtime for
+complex scientific and financial modeling workflows.
 
 
 Current build status
@@ -117,12 +132,12 @@ it is possible to build and upload installable packages to the
 [conda-forge](https://anaconda.org/conda-forge) [anaconda.org](https://anaconda.org/)
 channel for Linux, Windows and OSX respectively.
 
-To manage the continuous integration and simplify feedstock maintenance
+To manage the continuous integration and simplify feedstock maintenance,
 [conda-smithy](https://github.com/conda-forge/conda-smithy) has been developed.
 Using the ``conda-forge.yml`` within this repository, it is possible to re-render all of
 this feedstock's supporting files (e.g. the CI configuration files) with ``conda smithy rerender``.
 
-For more information please check the [conda-forge documentation](https://conda-forge.org/docs/).
+For more information, please check the [conda-forge documentation](https://conda-forge.org/docs/).
 
 Terminology
 ===========
@@ -149,7 +164,7 @@ merged, the recipe will be re-built and uploaded automatically to the
 everybody to install and use from the `conda-forge` channel.
 Note that all branches in the conda-forge/omnipkg-feedstock are
 immediately built and any created packages are uploaded, so PRs should be based
-on branches in forks and branches in the main repository should only be used to
+on branches in forks, and branches in the main repository should only be used to
 build distinct package versions.
 
 In order to produce a uniquely identifiable distribution:
