@@ -1,5 +1,5 @@
 {% set name = "omnipkg" %}
-{% set version = "2.0.0" %}
+{% set version = "2.0.1" %}
 
 package:
   name: {{ name|lower }}
@@ -7,7 +7,7 @@ package:
 
 source:
   url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-  sha256: 3d8b7016d0c1a19b12065601a0dd56b3f7456625e009a86f6966ca844a864d06
+  sha256: 7e220dd9f4832b1eb175034222f495ff2ae92ee9df391e62ca0973219a9d1622
 
 build:
   number: 0
@@ -16,6 +16,8 @@ build:
   entry_points:
     - omnipkg = omnipkg.cli:main
     - 8pkg = omnipkg.cli:main
+    - 8PKG = omnipkg.cli:main
+    - OMNIPKG = omnipkg.cli:main
 
 requirements:
   host:
@@ -49,36 +51,31 @@ about:
   license_file: LICENSE
   summary: 'A distributed runtime hypervisor for Python enabling concurrent, zero-copy multi-framework orchestration.'
   description: |
-    OmniPkg 2.0.0 represents a paradigm shift from package management to a Distributed
-    Runtime Architecture. It functions as a local Hypervisor for Python, allowing
-    conflicting AI frameworks and hardware drivers to run concurrently in the same
-    workflow with near-zero latency.
+    OmniPkg v2.0.1 is a significant stability and performance release that transforms it
+    into a local Hypervisor for Python. It allows conflicting AI frameworks and hardware
+    drivers to run concurrently in the same workflow with near-zero latency.
 
-    This release introduces three critical architectural advancements for ML/AI pipelines:
+    This release focuses on three key areas:
 
-    1. Universal GPU Inter-Process Communication (IPC):
-       Implements a custom, framework-agnostic CUDA IPC protocol using raw ctypes.
-       This enables true zero-copy tensor handoffs between isolated processes (e.g.,
-       passing data from PyTorch to TensorFlow) with ~1.5ms latency, significantly
-       outperforming standard serialization methods.
+    1. Performance Overhaul: Microsecond Activation
+       The loader has been obsessively profiled and optimized. Pre-flight checks for
+       existing packages now complete in ~50 microseconds (a ~500x speedup) via
+       direct filesystem scans. Knowledge Base updates are now surgical, avoiding
+       slow full-filesystem scans after installations.
 
-    2. Selective Hardware Virtualization:
-       Features dynamic LD_LIBRARY_PATH injection at the worker level. This allows
-       different worker processes to utilize different CUDA Toolkit versions or
-       runtime libraries (e.g., running legacy models on CUDA 11 alongside modern
-       models on CUDA 12) simultaneously on the same host machine without conflict.
+    2. Critical Stability & Cross-Platform Fixes:
+       Resolves multiple recursion loops during first-time setup, especially on Windows.
+       Full daemon functionality is now enabled on Windows via a --no-fork mode. Bugs
+       related to psutil detection, initial KB creation, and binary PATH manipulation
+       have been fixed, ensuring a robust user experience from the very first run.
 
-    3. Elastic Persistent Daemon Architecture:
-       Replaces ad-hoc process spawning with a self-healing, elastic worker pool.
-       Workers utilize a "clean slate" architecture, morphing into specific framework
-       environments on-demand and purging themselves after execution. This reduces
-       environment context switching latency from ~2000ms (cold start) to ~60ms (warm).
+    3. Architectural Enhancements:
+       The daemon architecture was hardened with more granular locking to allow safe,
+       concurrent worker spawning. This release also introduces a smart verification
+       system for interdependent packages, automatic detection of special package
+       indexes (like PyTorch CUDA variants), and snapshot-based environment restoration.
 
-    OmniPkg 2.0 eliminates the need for complex container orchestration for local
-    multi-model inference, providing a unified, high-performance runtime for
-    complex scientific and financial modeling workflows.
-
-  doc_url: https://github.com/1minds3t/omnipkg/tree/main/docs
+  doc_url: https://omnipkg.readthedocs.io/en/latest/
   dev_url: https://github.com/1minds3t
 
 extra:
