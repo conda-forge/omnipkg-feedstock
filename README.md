@@ -7,25 +7,30 @@ Home: https://github.com/1minds3t/omnipkg
 
 Package license: AGPL-3.0-only
 
-Summary: The Ultimate Python Dependency Resolver. One environment. Infinite packages. Zero conflicts.
+Summary: Distributed Python runtime hypervisor - Linux, macOS, Windows (x86_64, ARM64, aarch64)
 
 Development: https://github.com/1minds3t
 
-Documentation: https://github.com/1minds3t/omnipkg/tree/main/docs
+Documentation: https://omnipkg.readthedocs.io/en/latest/
 
-Omnipkg is a next-generation Python dependency manager that solves the
-classic problems of pip, conda, and Docker by enabling multiple package
-versions and Python interpreters to coexist in a single environment.
-Key features:
-  • Dynamic version switching: swap between NumPy, TensorFlow, or any package mid-script.
-  • Multi-interpreter freedom: run Python 3.8, 3.11, and beyond in one process.
-  • Auto-healing: automatically detect and fix broken dependencies at runtime.
-  • Bubble isolation: install conflicting versions side by side without virtualenvs.
-  • SQLite/Redis intelligence: instant lookups, conflict resolution, and rollback.
-Omnipkg is designed for researchers, quants, and engineers who demand
-speed, reproducibility, and zero-friction workflows across complex
-dependency stacks. It provides a robust alternative to pipx, uv, poetry,
-and Docker, all in one tool. Optional: omnipkg can use Redis (v5.0+) for improved speed.
+OmniPkg is a local Hypervisor for Python enabling concurrent, zero-copy
+multi-framework orchestration. It allows conflicting AI frameworks and
+hardware drivers to run simultaneously in the same workflow with near-zero latency.
+
+Platform Support (Runtime Verified):
+- Linux: x86_64, aarch64/ARM64, ppc64le
+- macOS: x86_64 (Intel), arm64 (Apple Silicon)
+- Windows: x86_64, ARM64
+- FreeBSD: x86_64 (experimental)
+- Red Hat Enterprise Linux, Debian, Ubuntu, Arch Linux
+
+Key Features:
+- Microsecond package activation (~50μs)
+- Cross-platform daemon with native fork/no-fork modes
+- Concurrent multi-version package loading
+- Zero-copy multi-framework orchestration
+- Smart dependency resolution with snapshot restoration
+- Live daemon monitoring dashboard
 
 
 Current build status
@@ -117,12 +122,12 @@ it is possible to build and upload installable packages to the
 [conda-forge](https://anaconda.org/conda-forge) [anaconda.org](https://anaconda.org/)
 channel for Linux, Windows and OSX respectively.
 
-To manage the continuous integration and simplify feedstock maintenance
+To manage the continuous integration and simplify feedstock maintenance,
 [conda-smithy](https://github.com/conda-forge/conda-smithy) has been developed.
 Using the ``conda-forge.yml`` within this repository, it is possible to re-render all of
 this feedstock's supporting files (e.g. the CI configuration files) with ``conda smithy rerender``.
 
-For more information please check the [conda-forge documentation](https://conda-forge.org/docs/).
+For more information, please check the [conda-forge documentation](https://conda-forge.org/docs/).
 
 Terminology
 ===========
@@ -149,7 +154,7 @@ merged, the recipe will be re-built and uploaded automatically to the
 everybody to install and use from the `conda-forge` channel.
 Note that all branches in the conda-forge/omnipkg-feedstock are
 immediately built and any created packages are uploaded, so PRs should be based
-on branches in forks and branches in the main repository should only be used to
+on branches in forks, and branches in the main repository should only be used to
 build distinct package versions.
 
 In order to produce a uniquely identifiable distribution:
