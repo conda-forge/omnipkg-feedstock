@@ -1,5 +1,5 @@
 {% set name = "omnipkg" %}
-{% set version = "2.0.3" %}
+{% set version = "2.0.4" %}
 
 package:
   name: {{ name|lower }}
@@ -7,7 +7,7 @@ package:
 
 source:
   url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-  sha256: 0c3abe540772d56c75e77ef1135d2ced29e13deb80bfa42b651eb4dd18c33eae
+  sha256: 048459fd5bb47011a8e60b37df9eba76778f1d27110cead4dd00585b0a61166c
 
 build:
   number: 0
