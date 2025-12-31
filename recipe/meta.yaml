@@ -1,5 +1,5 @@
 {% set name = "omnipkg" %}
-{% set version = "2.0.5" %}
+{% set version = "2.0.6" %}
 
 package:
   name: {{ name|lower }}
@@ -7,7 +7,7 @@ package:
 
 source:
   url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-  sha256: 9aa073cd2ab9313cf5921d115909fc428d9cc8f5fdf53026beb58ff5040267e2
+  sha256: 98ec3fd454029982139d17d16a1fed95749d319d5b78a90e94253a6323df1707
 
 build:
   number: 0
@@ -54,14 +54,14 @@ about:
     OmniPkg is a local Hypervisor for Python enabling concurrent, zero-copy 
     multi-framework orchestration. It allows conflicting AI frameworks and 
     hardware drivers to run simultaneously in the same workflow with near-zero latency.
-    
+
     Platform Support (Runtime Verified):
     - Linux: x86_64, aarch64/ARM64, ppc64le
     - macOS: x86_64 (Intel), arm64 (Apple Silicon)
     - Windows: x86_64, ARM64
     - FreeBSD: x86_64 (experimental)
     - Red Hat Enterprise Linux, Debian, Ubuntu, Arch Linux
-    
+
     Key Features:
     - Microsecond package activation (~50μs)
     - Cross-platform daemon with native fork/no-fork modes
