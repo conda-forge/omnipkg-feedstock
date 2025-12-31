@@ -1,15 +1,18 @@
 github:
   branch_name: main
   tooling_branch_name: main
+
 conda_build:
   error_overlinking: true
+
 conda_forge_output_validation: true
+
 provider:
   linux_aarch64: azure
   linux_ppc64le: azure
-  osx_arm64: azure
   win: azure
+  # osx_arm64 intentionally disabled (no native runners)
+
 build_platform:
-  osx_arm64: osx_64
   linux_aarch64: linux_64
   linux_ppc64le: linux_64
