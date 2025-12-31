@@ -10,7 +10,7 @@ source:
   sha256: f07d3bd32e786e5de143b6e07558b1fe5ee1ab08ac701af3f98b8eb05bd8490b
 
 build:
-  number: 5
+  number: 6
   script: {{ PYTHON }} -m pip install . --no-deps --no-build-isolation -vv
   entry_points:
     - omnipkg = omnipkg.cli:main
@@ -37,7 +37,7 @@ requirements:
     - safety >=3.7.0  # [py<314]
     - marshmallow >=4.1.2
     - pip-audit >=2.6.0  # [py>=314]
-    - uv >=0.9.6
+    - uv >=0.9.6  # [not ppc64le]
     - urllib3 >=1.26.19
     - tqdm >=4.67.1
     - typing-extensions >=4.0.0
