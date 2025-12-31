@@ -37,7 +37,7 @@ requirements:
     - safety >=3.7.0  # [py<314]
     - marshmallow >=4.1.2
     - pip-audit >=2.6.0  # [py>=314]
-    - uv >=0.9.6
+    - uv >=0.9.6  # [not ppc64le]
     - urllib3 >=1.26.19
     - tqdm >=4.67.1
     - typing-extensions >=4.0.0
