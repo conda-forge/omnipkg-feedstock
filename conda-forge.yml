@@ -12,7 +12,7 @@ provider:
   linux_ppc64le: azure
   win: azure
   # osx_arm64 intentionally disabled (no native runners)
-
+  
 build_platform:
   linux_aarch64: linux_64
   linux_ppc64le: linux_64
