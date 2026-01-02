@@ -1,5 +1,5 @@
 {% set name = "omnipkg" %}
-{% set version = "2.0.7" %}
+{% set version = "2.0.8" %}
 
 package:
   name: {{ name|lower }}
@@ -7,7 +7,7 @@ package:
 
 source:
   url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-  sha256: f07d3bd32e786e5de143b6e07558b1fe5ee1ab08ac701af3f98b8eb05bd8490b
+  sha256: ca443219d31e67d3cff3333e9a5a8d8241e9500008d0d39228ef544aa37d9469
 
 build:
   number: 8  # Bump this!
@@ -65,7 +65,7 @@ about:
   license: AGPL-3.0-only
   license_family: AGPL
   license_file: LICENSE
-  summary: 'The Ultimate Python Dependency Resolver. One environment. Infinite packages. Zero conflicts.'
+  summary: 'Run infinite Python packages and interpreters concurrently in one environment with zero conflicts, complexity, or bloat.'
   description: |
     OmniPkg is a distributed Python runtime hypervisor enabling concurrent, 
     zero-copy multi-framework orchestration.
@@ -82,7 +82,7 @@ about:
     - Zero-copy multi-framework orchestration
     - Smart dependency resolution with snapshot restoration
     - Live daemon monitoring dashboard
-  doc_url: https://github.com/1minds3t/omnipkg/tree/main/docs
+  doc_url: https://omnipkg.readthedocs.io/en/latest/
   dev_url: https://github.com/1minds3t/omnipkg
 
 extra:
