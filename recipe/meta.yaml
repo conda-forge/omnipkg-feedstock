@@ -10,8 +10,14 @@ source:
   sha256: f07d3bd32e786e5de143b6e07558b1fe5ee1ab08ac701af3f98b8eb05bd8490b
 
 build:
-  number: 7
-  script: {{ PYTHON }} -m pip install . --no-deps --no-build-isolation -vv
+  number: 8  # Bump this!
+  script:
+    # Unix/Mac: Use the build python, but force install to the ARM location (${PREFIX})
+    - python -m pip install . --no-deps --no-build-isolation --prefix "${PREFIX}" -vv  # [unix]
+    
+    # Windows: Just use standard pip (it knows where to go automatically)
+    - python -m pip install . --no-deps --no-build-isolation -vv                       # [win]
+    
   entry_points:
     - omnipkg = omnipkg.cli:main
     - 8pkg = omnipkg.cli:main
@@ -19,6 +25,9 @@ build:
     - OMNIPKG = omnipkg.cli:main
 
 requirements:
+  build:
+    - python                                 # [build_platform != target_platform]
+    - cross-python_{{ target_platform }}     # [build_platform != target_platform]
   host:
     - python
     - pip
@@ -43,10 +52,13 @@ requirements:
     - typing-extensions >=4.0.0
 
 test:
+  # This selector skips tests when building osx-arm64 on an Intel runner
+  requires:
+    - pip
   imports:
-    - omnipkg
+    - omnipkg            # [build_platform == target_platform]
   commands:
-    - omnipkg --version
+    - omnipkg --version  # [build_platform == target_platform]
 
 about:
   home: https://github.com/1minds3t/omnipkg
