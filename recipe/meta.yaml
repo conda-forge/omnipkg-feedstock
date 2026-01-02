@@ -11,7 +11,9 @@ source:
 
 build:
   number: 7
-  script: {{ PYTHON }} -m pip install . --no-deps --no-build-isolation -vv
+  # Use generic 'python' (which will be the BUILD python) instead of {{ PYTHON }} (HOST python)
+  # This works for both native and cross-compilation
+  script: python -m pip install . --no-deps --no-build-isolation --prefix "${PREFIX}" -vv
   entry_points:
     - omnipkg = omnipkg.cli:main
     - 8pkg = omnipkg.cli:main
@@ -19,6 +21,9 @@ build:
     - OMNIPKG = omnipkg.cli:main
 
 requirements:
+  build:
+    - python                                 # [build_platform != target_platform]
+    - cross-python_{{ target_platform }}     # [build_platform != target_platform]
   host:
     - python
     - pip
@@ -43,10 +48,13 @@ requirements:
     - typing-extensions >=4.0.0
 
 test:
+  # This selector skips tests when building osx-arm64 on an Intel runner
+  requires:
+    - pip
   imports:
-    - omnipkg
+    - omnipkg            # [build_platform == target_platform]
   commands:
-    - omnipkg --version
+    - omnipkg --version  # [build_platform == target_platform]
 
 about:
   home: https://github.com/1minds3t/omnipkg
