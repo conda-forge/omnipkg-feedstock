@@ -10,7 +10,7 @@ source:
   sha256: ca443219d31e67d3cff3333e9a5a8d8241e9500008d0d39228ef544aa37d9469
 
 build:
-  number: 8  # Bump this!
+  number: 0  # Bump this!
   script:
     # Unix/Mac: Use the build python, but force install to the ARM location (${PREFIX})
     - python -m pip install . --no-deps --no-build-isolation --prefix "${PREFIX}" -vv  # [unix]
