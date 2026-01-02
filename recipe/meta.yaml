@@ -12,7 +12,8 @@ source:
 build:
   number: 1
   noarch: python
-  script: {{ PYTHON }} -m pip install . --no-deps --no-build-isolation -vv
+  # Noarch doesn't need the complex [unix] vs [win] script logic
+  script: python -m pip install . --no-deps --no-build-isolation -vv
   entry_points:
     - omnipkg = omnipkg.cli:main
     - 8pkg = omnipkg.cli:main
@@ -21,10 +22,11 @@ build:
 
 requirements:
   host:
-    - python >=3.10
+    - python >=3.10  # Aligned with your platform builds
     - pip
     - setuptools >=61.0
   run:
+    # --- SYNCED WITH PLATFORM BUILD ---
     - python >=3.10
     - requests >=2.20
     - psutil >=5.9.0
@@ -32,21 +34,20 @@ requirements:
     - rich >=10.0.0
     - filelock >=3.20.1
     - packaging >=23.0
-    - tomli >=2.0.1  # [py<311]
+    - tomli            # [py<311]
     - authlib >=1.6.5
     - aiohttp >=3.13.1
-    - safety >=3.7.0  # [py<314]
+    - safety >=3.7.0   # [py<314]
     - marshmallow >=4.1.2
-    - pip-audit >=2.6.0  # [py>=314]
-    # Removed [not ppc64le] selector - OS/Arch selectors are invalid in noarch
-    - uv >=0.9.6
+    - pip-audit >=2.6.0 # [py>=314]
+    # Note: uv is binary, so noarch might warn about arch-specific deps, 
+    # but the solver handles it.
+    - uv >=0.9.6       # [not ppc64le] 
     - urllib3 >=1.26.19
     - tqdm >=4.67.1
     - typing-extensions >=4.0.0
 
 test:
-  requires:
-    - pip
   imports:
     - omnipkg
   commands:
@@ -57,7 +58,7 @@ about:
   license: AGPL-3.0-only
   license_family: AGPL
   license_file: LICENSE
-  summary: 'Run infinite Python packages and interpreters concurrently in one environment with zero conflicts, complexity, or bloat.'
+  summary: 'The Ultimate Python Dependency Resolver. One environment. Infinite packages. Zero conflicts.'
   description: |
     OmniPkg is a distributed Python runtime hypervisor enabling concurrent, 
     zero-copy multi-framework orchestration.
