@@ -10,8 +10,14 @@ source:
   sha256: f07d3bd32e786e5de143b6e07558b1fe5ee1ab08ac701af3f98b8eb05bd8490b
 
 build:
-  number: 7
-  script: {{ PYTHON }} -m pip install . --no-deps --no-build-isolation -vv
+  number: 8  # Bump this!
+  script:
+    # Unix/Mac: Use the build python, but force install to the ARM location (${PREFIX})
+    - python -m pip install . --no-deps --no-build-isolation --prefix "${PREFIX}" -vv  # [unix]
+    
+    # Windows: Just use standard pip (it knows where to go automatically)
+    - python -m pip install . --no-deps --no-build-isolation -vv                       # [win]
+    
   entry_points:
     - omnipkg = omnipkg.cli:main
     - 8pkg = omnipkg.cli:main
