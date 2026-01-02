@@ -1,5 +1,6 @@
 {% set name = "omnipkg" %}
-{% set version = "2.0.8" %}
+{% set version = "2.0.8.1" %}
+{% set python_min = "3.10" %}
 
 package:
   name: {{ name|lower }}
@@ -7,17 +8,12 @@ package:
 
 source:
   url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-  sha256: ca443219d31e67d3cff3333e9a5a8d8241e9500008d0d39228ef544aa37d9469
+  sha256: 28521286bfed3b588be22fd159cedf76172deafa39a785e9dba89ff1ae95420e
 
 build:
-  number: 0  # Bump this!
-  script:
-    # Unix/Mac: Use the build python, but force install to the ARM location (${PREFIX})
-    - python -m pip install . --no-deps --no-build-isolation --prefix "${PREFIX}" -vv  # [unix]
-    
-    # Windows: Just use standard pip (it knows where to go automatically)
-    - python -m pip install . --no-deps --no-build-isolation -vv                       # [win]
-    
+  number: 0  # ← Noarch is now the fallback (lower priority)
+  noarch: python
+  script: python -m pip install . --no-deps --no-build-isolation -vv
   entry_points:
     - omnipkg = omnipkg.cli:main
     - 8pkg = omnipkg.cli:main
@@ -25,47 +21,43 @@ build:
     - OMNIPKG = omnipkg.cli:main
 
 requirements:
-  build:
-    - python                                 # [build_platform != target_platform]
-    - cross-python_{{ target_platform }}     # [build_platform != target_platform]
   host:
-    - python
+    - python {{ python_min }}
     - pip
     - setuptools >=61.0
   run:
-    - python
+    - python >={{ python_min }}
     - requests >=2.20
     - psutil >=5.9.0
     - typer >=0.4.0
     - rich >=10.0.0
     - filelock >=3.20.1
     - packaging >=23.0
-    - tomli  # [py<311]
+    - tomli
     - authlib >=1.6.5
     - aiohttp >=3.13.1
-    - safety >=3.7.0  # [py<314]
+    - safety >=3.7.0
     - marshmallow >=4.1.2
-    - pip-audit >=2.6.0  # [py>=314]
-    - uv >=0.9.6  # [not ppc64le]
+    - pip-audit >=2.6.0
     - urllib3 >=1.26.19
     - tqdm >=4.67.1
     - typing-extensions >=4.0.0
+    # NO uv - optional performance enhancement, installed separately
 
 test:
-  # This selector skips tests when building osx-arm64 on an Intel runner
   requires:
-    - pip
+    - python {{ python_min }}
   imports:
-    - omnipkg            # [build_platform == target_platform]
+    - omnipkg
   commands:
-    - omnipkg --version  # [build_platform == target_platform]
+    - omnipkg --version
 
 about:
   home: https://github.com/1minds3t/omnipkg
   license: AGPL-3.0-only
   license_family: AGPL
   license_file: LICENSE
-  summary: 'Run infinite Python packages and interpreters concurrently in one environment with zero conflicts, complexity, or bloat.'
+  summary: 'The Ultimate Python Dependency Resolver. One environment. Infinite packages. Zero conflicts.'
   description: |
     OmniPkg is a distributed Python runtime hypervisor enabling concurrent, 
     zero-copy multi-framework orchestration.
@@ -82,6 +74,10 @@ about:
     - Zero-copy multi-framework orchestration
     - Smart dependency resolution with snapshot restoration
     - Live daemon monitoring dashboard
+    
+    Performance Note:
+    - Install 'uv' separately for 6x faster script execution with '8pkg run'
+    - Core functionality works with standard pip (already included)
   doc_url: https://omnipkg.readthedocs.io/en/latest/
   dev_url: https://github.com/1minds3t/omnipkg
 
