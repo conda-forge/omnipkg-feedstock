@@ -29,6 +29,10 @@ Key Features:
 - Smart dependency resolution with snapshot restoration
 - Live daemon monitoring dashboard
 
+Performance Note:
+- Install 'uv' separately for 6x faster script execution with '8pkg run'
+- Core functionality works with standard pip (already included)
+
 
 Current build status
 ====================
