@@ -10,7 +10,7 @@ source:
   sha256: f07d3bd32e786e5de143b6e07558b1fe5ee1ab08ac701af3f98b8eb05bd8490b
 
 build:
-  number: 7
+  number: 8
   # Use generic 'python' (which will be the BUILD python) instead of {{ PYTHON }} (HOST python)
   # This works for both native and cross-compilation
   script: python -m pip install . --no-deps --no-build-isolation --prefix "${PREFIX}" -vv
