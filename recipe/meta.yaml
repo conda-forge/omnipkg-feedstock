@@ -1,5 +1,5 @@
 {% set name = "omnipkg" %}
-{% set version = "2.0.8.1" %}
+{% set version = "2.1.0" %}
 
 package:
   name: {{ name|lower }}
@@ -7,17 +7,15 @@ package:
 
 source:
   url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-  sha256: 28521286bfed3b588be22fd159cedf76172deafa39a785e9dba89ff1ae95420e
+  sha256: f4c0b93869baa678e1d0399d860534d4c98eff07bc03bf188a7643332c0264c2
 
 build:
-  number: 1  # Bump this!
+  number: 0
   script:
     # Unix/Mac: Use the build python, but force install to the ARM location (${PREFIX})
     - python -m pip install . --no-deps --no-build-isolation --prefix "${PREFIX}" -vv  # [unix]
-    
     # Windows: Just use standard pip (it knows where to go automatically)
     - python -m pip install . --no-deps --no-build-isolation -vv                       # [win]
-    
   entry_points:
     - omnipkg = omnipkg.cli:main
     - 8pkg = omnipkg.cli:main
@@ -69,12 +67,12 @@ about:
   description: |
     OmniPkg is a distributed Python runtime hypervisor enabling concurrent, 
     zero-copy multi-framework orchestration.
-    
+
     Platform Support:
     - Linux: x86_64, aarch64/ARM64, ppc64le
     - macOS: x86_64 (Intel), arm64 (Apple Silicon)
     - Windows: x86_64, ARM64
-    
+
     Key Features:
     - Microsecond package activation (~50μs)
     - Cross-platform daemon with native fork/no-fork modes
