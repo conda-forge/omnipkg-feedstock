@@ -10,7 +10,7 @@ source:
   sha256: f60fe4115e794f9d52b02965f67e359fb053e5655555b6cd2c3765234ebc459a
 
 build:
-  number: 1  # Increment for fix
+  number: 2 # Increment for fix
   script:
     - python -m pip install . --no-deps --no-build-isolation -vv  # [unix]
     - python -m pip install . --no-deps --no-build-isolation -vv  # [win]
