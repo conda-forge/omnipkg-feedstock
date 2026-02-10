@@ -10,13 +10,10 @@ source:
   sha256: f60fe4115e794f9d52b02965f67e359fb053e5655555b6cd2c3765234ebc459a
 
 build:
-  number: 0  # Reset for new version
+  number: 1  # Increment for fix
   script:
-    # Unix/Mac: Use the build python, but force install to the ARM location (${PREFIX})
-    - python -m pip install . --no-deps --no-build-isolation --prefix "${PREFIX}" -vv  # [unix]
-    
-    # Windows: Just use standard pip (it knows where to go automatically)
-    - python -m pip install . --no-deps --no-build-isolation -vv                       # [win]
+    - python -m pip install . --no-deps --no-build-isolation -vv  # [unix]
+    - python -m pip install . --no-deps --no-build-isolation -vv  # [win]
     
   entry_points:
     - omnipkg = omnipkg.cli:main
