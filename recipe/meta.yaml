@@ -38,10 +38,10 @@ build:
       )  # [win]
     
   entry_points:
-    - omnipkg = omnipkg.cli:main
-    - 8pkg = omnipkg.cli:main
-    - 8PKG = omnipkg.cli:main
-    - OMNIPKG = omnipkg.cli:main
+    - omnipkg = omnipkg.dispatcher:main
+    - 8pkg = omnipkg.dispatcher:main
+    - 8PKG = omnipkg.dispatcher:main
+    - OMNIPKG = omnipkg.dispatcher:main
 
 requirements:
   build:
