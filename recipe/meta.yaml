@@ -11,16 +11,16 @@ source:
   sha256: d72383e54738f529491ee5653dc2b1db935bdc4027a9b9942d81b1c1198b9a88
 
 build:
-  number: 0
+  number: 1
   noarch: python
   script: 
     - export OMNIPKG_SKIP_C_EXT=1
     - python -m pip install . --no-deps --no-build-isolation -vv
   entry_points:
-    - omnipkg = omnipkg.cli:main
-    - 8pkg = omnipkg.cli:main
-    - 8PKG = omnipkg.cli:main
-    - OMNIPKG = omnipkg.cli:main
+  - omnipkg = omnipkg.dispatcher:main
+  - 8pkg = omnipkg.dispatcher:main
+  - 8PKG = omnipkg.dispatcher:main
+  - OMNIPKG = omnipkg.dispatcher:main
 
 requirements:
   host:
