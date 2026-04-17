@@ -11,7 +11,7 @@ source:
   sha256: 8839241a1c7822c953384b6d03173a3771c23fd358a2e0b14c1dc1d15935cb79
 
 build:
-  number: 2
+  number: 3
   noarch: python
   script: 
     - export OMNIPKG_SKIP_C_EXT=1    # [unix]
@@ -24,8 +24,6 @@ build:
     - OMNIPKG = omnipkg.dispatcher:main
 
 requirements:
-  build:
-    - {{ compiler('c') }}                    # Required for full native C-dispatcher (skipped in noarch via OMNIPKG_SKIP_C_EXT)
   host:
     - python {{ python_min }}
     - pip
@@ -43,7 +41,6 @@ requirements:
     - typing_extensions >=4.0.0         # [py<310]
     - authlib >=1.6.9
     - aiohttp >=3.13.5
-    - cryptography >=46.0.7
     - pip-audit >=2.0.0
     - urllib3 >=2.6.3
     - flask >=3.0.3
