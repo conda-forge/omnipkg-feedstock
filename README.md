@@ -5,7 +5,7 @@ Feedstock license: [BSD-3-Clause](https://github.com/conda-forge/omnipkg-feedsto
 
 Home: https://omnipkg.pages.dev/
 
-Package license: 
+Package license: AGPL-3.0-only
 
 Summary: The Ultimate Python Dependency Resolver. One environment. Infinite packages. Zero conflicts.
 
