@@ -11,7 +11,7 @@ source:
   sha256: 8839241a1c7822c953384b6d03173a3771c23fd358a2e0b14c1dc1d15935cb79
 
 build:
-  number: 1
+  number: 2
   noarch: python
   script: 
     - export OMNIPKG_SKIP_C_EXT=1    # [unix]
@@ -60,6 +60,7 @@ test:
 
 about:
   home: https://omnipkg.pages.dev/
+  license: AGPL-3.0-only
   license_family: AGPL
   license_file: LICENSE
   summary: 'The Ultimate Python Dependency Resolver. One environment. Infinite packages. Zero conflicts.'
