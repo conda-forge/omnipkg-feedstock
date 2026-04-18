@@ -1,6 +1,5 @@
 {% set name = "omnipkg" %}
 {% set version = "3.0.0" %}
-{% set python_min = "3.10" %}
 
 package:
   name: {{ name|lower }}
@@ -11,12 +10,11 @@ source:
   sha256: 8839241a1c7822c953384b6d03173a3771c23fd358a2e0b14c1dc1d15935cb79
 
 build:
-  number: 3
-  noarch: python
-  script: 
-    - export OMNIPKG_SKIP_C_EXT=1    # [unix]
-    - set OMNIPKG_SKIP_C_EXT=1       # [win]
-    - python -m pip install . --no-deps --no-build-isolation -vv
+  number: 4
+  script:
+    - python -m pip install . --no-deps --no-build-isolation -vv  # [unix]
+    - python -m pip install . --no-deps --no-build-isolation -vv  # [win]
+    
   entry_points:
     - omnipkg = omnipkg.dispatcher:main
     - 8pkg = omnipkg.dispatcher:main
@@ -24,36 +22,42 @@ build:
     - OMNIPKG = omnipkg.dispatcher:main
 
 requirements:
+  build:
+    - {{ compiler('c') }}                    # CRITICAL: Required to compile dispatcher.c and omnipkg_atomic
+    - python                                 # [build_platform != target_platform]
+    - cross-python_{{ target_platform }}     # [build_platform != target_platform]
   host:
-    - python {{ python_min }}
+    - python
     - pip
-    - setuptools >=61.0
+    - setuptools >=50.0,<70.0
     - wheel
   run:
-    - python >={{ python_min }}
+    - python >=3.10                          # Conda-forge actively supports 3.9 through 3.13
     - requests >=2.20
     - psutil >=5.9.0
     - typer >=0.4.0
     - rich >=10.0.0
     - filelock >=3.20.3
     - packaging >=23.0
-    - tomli >=1.0.0                     # [py<311]
-    - typing_extensions >=4.0.0         # [py<310]
+    - tomli >=1.0.0  # [py<311]
+    - typing_extensions >=4.0.0  # [py<310]
     - authlib >=1.6.9
     - aiohttp >=3.13.5
+    - cryptography >=46.0.7 # [not ppc64le]
     - pip-audit >=2.0.0
+    - uv >=0.9.6  # [not ppc64le]
     - urllib3 >=2.6.3
     - flask >=3.0.3
-    - flask-cors >=3.0
-    # uv is optional (for 6x faster '8pkg run') - recommend installing separately
+    - flask-cors >=3.0   
 
 test:
+  # This selector skips tests when building osx-arm64 on an Intel runner
   requires:
     - pip
   imports:
-    - omnipkg
+    - omnipkg            # [build_platform == target_platform]
   commands:
-    - omnipkg --version
+    - omnipkg --version  # [build_platform == target_platform]
 
 about:
   home: https://omnipkg.pages.dev/
@@ -62,7 +66,7 @@ about:
   license_file: LICENSE
   summary: 'The Ultimate Python Dependency Resolver. One environment. Infinite packages. Zero conflicts.'
   description: |
-    OmniPkg is a distributed Python runtime hypervisor that enables concurrent, 
+    OmniPkg is a distributed Python runtime hypervisor that enables concurrent,
     zero-copy multi-framework orchestration across multiple Python versions and toolchains.
 
     Platform Support:
@@ -80,10 +84,6 @@ about:
     - True zero-copy tensor passing across different Python versions, PyTorch/CUDA versions, and frameworks — no JSON serialization or process boundaries required
 
     Perfect for scientific computing, large model serving, and heterogeneous Python/CUDA workflows where maximum flexibility and minimal latency matter.
-
-    Note for noarch builds:
-    - Core functionality works without the native C extension.
-    - For maximum performance (sub-ms dispatching), install the platform-specific build instead.
   doc_url: https://omnipkg.readthedocs.io/en/latest/
   dev_url: https://github.com/1minds3t/omnipkg
 
