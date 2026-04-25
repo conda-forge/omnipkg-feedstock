@@ -1,5 +1,5 @@
 {% set name = "omnipkg" %}
-{% set version = "3.1.0" %}
+{% set version = "3.1.1" %}
 
 package:
   name: {{ name|lower }}
@@ -7,14 +7,13 @@ package:
 
 source:
   url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-  sha256: 9435c4fc846c20fce75260ce1b40274693d1963901272f56c48586ae2f9f66cf
+  sha256: 5c04dfd7ddc3dcab7ee240fb74f7314b44d6fe7427e202c476c04ac5b942218b
 
 build:
-  number: 1
+  number: 0
   script:
     - python -m pip install . --no-deps --no-build-isolation -vv  # [unix]
     - python -m pip install . --no-deps --no-build-isolation -vv  # [win]
-    
   entry_points:
     - omnipkg = omnipkg.dispatcher:main
     - 8pkg = omnipkg.dispatcher:main
@@ -24,7 +23,7 @@ build:
 requirements:
   build:
     - {{ compiler('c') }}
-    - {{ stdlib("c") }}  
+    - {{ stdlib("c") }}
     - python                                 # [build_platform != target_platform]
     - cross-python_{{ target_platform }}     # [build_platform != target_platform]
   host:
@@ -49,7 +48,7 @@ requirements:
     - uv >=0.9.6  # [not ppc64le]
     - urllib3 >=2.6.3
     - flask >=3.0.3
-    - flask-cors >=3.0   
+    - flask-cors >=3.0
 
 test:
   # This selector skips tests when building osx-arm64 on an Intel runner
