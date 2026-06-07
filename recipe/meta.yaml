@@ -11,10 +11,11 @@ source:
 
 build:
   number: 1
-  script:
-    - python -m pip install . --no-deps --no-build-isolation -vv  # [unix]
-    - python -m pip install . --no-deps --no-build-isolation -vv  # [win]
-    
+  noarch: python
+  script: 
+    - export OMNIPKG_SKIP_C_EXT=1    # [unix]
+    - set OMNIPKG_SKIP_C_EXT=1       # [win]
+    - python -m pip install . --no-deps --no-build-isolation -vv
   entry_points:
     - omnipkg = omnipkg.dispatcher:main
     - 8pkg = omnipkg.dispatcher:main
