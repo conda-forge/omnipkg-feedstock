@@ -12,7 +12,6 @@ provider:
   linux_ppc64le: azure
   win: azure
   osx_arm64: azure
-  win_arm64: azure
 
 build_platform:
   linux_aarch64: linux_64
